@@ -1,0 +1,36 @@
+{
+    "chainId":  91342,
+    "network":  "GIWA Sepolia",
+    "deployedAt":  "2026-07-23T22:15:01.888Z",
+    "deployer":  "0xb5f9691Ffa543A18341F9cdf63e320e111A09F68",
+    "contracts":  {
+                      "SuhoRegistry":  {
+                                           "address":  "0x8c76e459ff950d24fe8bf3ac8374049cf3b4a77d",
+                                           "txHash":  "0x100658437963cd5cc893a8f7c23239de07d069261c1fa6f7e2ac99745293c54e",
+                                           "blockNumber":  "31498988",
+                                           "eas":  "0x4200000000000000000000000000000000000021",
+                                           "schemaUID":  "0x5512e735739f9bb56213d5bd69e04bdff780cb8c9e22e7195ace20112f145584",
+                                           "minStake":  "100000000000000",
+                                           "flagThreshold":  3,
+                                           "unchallengedFlagDelay":  86400,
+                                           "verified":  true
+                                       },
+                      "TrustOracle":  {
+                                          "address":  "0x8a94bca28a5241c3aba272d5b6fbdf2c71e6603d",
+                                          "txHash":  "0xb0eeb4734e71c95a3e9ff285d22fddffedfd83ee313994faf1035ca07cde0be1",
+                                          "blockNumber":  "31499784",
+                                          "dojangScroll":  "0xd5077b67dcb56caC8b270C7788FC3E6ee03F17B9",
+                                          "dojangAttesterId":  "0xaa92f8c143657dde575de430aecaea6ca91f2e6072339b16932d426895d8d678",
+                                          "registry":  "0x8c76e459ff950d24fe8bf3ac8374049cf3b4a77d",
+                                          "verified":  true
+                                      },
+                      "GuardedSend":  {
+                                          "address":  "0xfb19b30114fbc6b785aee4fd2f81cfd44e2ffa29",
+                                          "txHash":  "0x767cb8272a7a71d9a485ad24a43c0b46db7c66179fb55bfe026f5beb884d3239",
+                                          "blockNumber":  "31499786",
+                                          "registry":  "0x8c76e459ff950d24fe8bf3ac8374049cf3b4a77d",
+                                          "recallWindow":  600,
+                                          "verified":  true
+                                      }
+                  }
+}

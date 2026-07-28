@@ -1,0 +1,24 @@
+.env
+.env.local
+.env.*.local
+.env.example
+node_modules/
+.next/
+dist/
+coverage/
+cache/
+artifacts/
+typechain-types/
+*.log
+tmp/
+_suho_docs/
+Memory.md
+handoff.md
+log.md
+phase1-report.json
+docs/PROJECT_REFERENCE.md
+tsconfig.tsbuildinfo
+
+# Local Suho activity index. Replaceable by managed DB in production.
+data/*
+!data/.gitkeep

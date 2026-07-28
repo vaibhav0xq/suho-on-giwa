@@ -1,0 +1,46 @@
+{
+  "name": "suho",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Suho protected settlement layer on GIWA Sepolia.",
+  "scripts": {
+    "phase0:dojang": "tsx scripts/phase0/dojang-read.ts",
+    "phase0:schema": "tsx scripts/phase0/schema-registration.ts",
+    "phase0:upid": "tsx scripts/phase0/up-id-resolution.ts",
+    "phase0:flashblocks": "tsx scripts/phase0/flashblocks-status.ts",
+    "phase0": "npm run phase0:dojang && npm run phase0:schema && npm run phase0:upid && npm run phase0:flashblocks",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0",
+    "contracts:compile": "hardhat compile",
+    "contracts:test": "hardhat test",
+    "deploy:registry": "tsx scripts/deploy-registry.ts",
+    "seed:phase1-report": "tsx scripts/seed-phase1-report.ts",
+    "deploy:phase2": "tsx scripts/deploy-phase2.ts",
+    "check:phase2": "tsx scripts/check-phase2.ts",
+    "verify:deployments": "tsx scripts/verify-deployments.ts",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.6.1",
+    "autoprefixer": "^10.5.4",
+    "dotenv": "^16.4.5",
+    "lucide-react": "^1.26.0",
+    "next": "^14.2.35",
+    "postcss": "^8.5.22",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "viem": "^2.33.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
+    "@types/node": "^20.14.10",
+    "@types/react": "19.2.17",
+    "eslint": "^8.57.0",
+    "hardhat": "^2.26.0",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  }
+}
