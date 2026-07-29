@@ -48,8 +48,8 @@ GIWA is EVM-compatible, so the contracts use a standard Solidity, Hardhat, and V
 - Sender cancel flow before release
 - Recipient claim flow after release
 - Sent, incoming, and history activity tabs
-- Local activity index for development
-- Postgres schema for managed activity storage
+- Local activity index for development caching
+- Postgres schema for optional managed activity storage
 - GIWA deployment and verification scripts
 
 ## Contracts
@@ -88,6 +88,10 @@ docs/         project notes and implementation docs
 scripts/      deployment and verification scripts
 public/       static assets
 ```
+
+## Activity Data
+
+Suho does not require a hosted database for the current public testnet build. The activity API syncs `GuardedSend` events from GIWA Sepolia for the connected wallet and returns those rows directly. The local activity index is a development cache; a managed database can be added later if the project needs faster global history, analytics, or longer retention.
 
 ## App Routes
 
@@ -152,3 +156,4 @@ npm run verify:deployments
 Suho is testnet software. Do not use it with mainnet funds without a contract audit, production monitoring, and proper key management.
 
 Do not commit `.env` files, private keys, wallet secrets, local databases, build output, or production logs.
+

@@ -27,7 +27,9 @@ Chain constants and ABI bindings live in `lib/`.
 
 ## Activity Index
 
-The activity index tracks guarded sends by sender and recipient. It has a local JSON-backed implementation for development and a Postgres schema in `docs/activity-index-postgres.sql` for a managed backend.
+The activity index tracks guarded sends by sender and recipient. The hosted app can rebuild wallet-specific activity from `GuardedSend` events, so a database is not required for the current public testnet build.
+
+The local JSON-backed index is a development cache. A Postgres schema is included in `docs/activity-index-postgres.sql` for a managed backend later.
 
 The shared activity model is in `lib/activity-store.ts`.
 

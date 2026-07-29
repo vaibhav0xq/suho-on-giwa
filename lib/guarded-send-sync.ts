@@ -117,8 +117,15 @@ export async function syncGuardedSendsForAddress(address: `0x${string}`, role: "
     recipient: role === "recipient" ? address : undefined
   });
 
-  await upsertGuardedSends(result.rows, result.lastEventBlock);
-  return result;
+  try {
+    await upsertGuardedSends(result.rows, result.lastEventBlock);
+    return result;
+  } catch (error) {
+    return {
+      ...result,
+      storeWarning: error instanceof Error ? error.message : "Activity index write failed."
+    };
+  }
 }
 
 export async function syncGuardedSendsByBlockCursor(lastSyncedBlock?: string | undefined, blockSpan = DEFAULT_SYNC_BLOCK_SPAN) {
@@ -136,3 +143,5 @@ export async function syncGuardedSendsByBlockCursor(lastSyncedBlock?: string | u
 
   return { fromBlock, toBlock, latestBlock, eventCount: result.eventCount, advanced: true };
 }
+
+
