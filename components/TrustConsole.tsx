@@ -57,7 +57,7 @@ export function TrustConsole({
           onChange={(event) => onRecipientChange(event.target.value)}
           onKeyDown={(event) => { if (event.key === "Enter") onCheck(); }}
           className={isChecking ? "input input--mono scanline" : "input input--mono"}
-          placeholder="0x… or name.up.id"
+          placeholder="0x... or name.up.id"
           spellCheck={false}
           autoComplete="off"
         />
@@ -71,7 +71,7 @@ export function TrustConsole({
         <div className={stepClass(Boolean(trustReport), identityTone)}>
           <span className="vr-node"><BadgeCheck size={13} /></span>
           <span className="grow">
-            <span className="vr-label">Identity — Dojang</span>
+            <span className="vr-label">Identity - Dojang</span>
             <span className="vr-value">{trustReport ? (trustReport.dojangVerified ? "Verified" : "Unverified") : "Awaiting check"}</span>
           </span>
         </div>
@@ -79,14 +79,14 @@ export function TrustConsole({
           <span className="vr-node"><Database size={13} /></span>
           <span className="grow">
             <span className="vr-label">Registry</span>
-            <span className="vr-value">{registryLabel ?? "—"}</span>
+            <span className="vr-value">{registryLabel ?? "--"}</span>
           </span>
         </div>
         <div className={stepClass(Boolean(verdict), verdict?.tone)}>
           <span className="vr-node"><VerdictIcon size={13} /></span>
           <span className="grow">
             <span className="vr-label">Verdict</span>
-            <span className="vr-value">{verdict?.name ?? "—"}</span>
+            <span className="vr-value">{verdict?.name ?? "--"}</span>
           </span>
         </div>
       </div>

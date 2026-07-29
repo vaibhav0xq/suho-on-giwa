@@ -31,7 +31,7 @@ export function ReportPanel({
           value={evidence}
           onChange={(event) => onEvidenceChange(event.target.value)}
           className="input"
-          placeholder="https://… link to public evidence"
+          placeholder="https://... public evidence link"
           autoComplete="off"
           aria-label="Evidence URI"
         />

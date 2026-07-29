@@ -58,7 +58,7 @@ export function SendDrawer({ send, account, now, onClose, onCancel, onClaim }: S
           <div className="grow">
             <p className="drawer__kicker">Transaction detail</p>
             <h2 className="drawer__title mono">{sendDetailLabel(send, account)}</h2>
-            <p className="drawer__sub">Guarded send {send.id.toString()} · {sendStatus(send)}</p>
+            <p className="drawer__sub">Guarded send {send.id.toString()} - {sendStatus(send)}</p>
           </div>
           <button type="button" onClick={onClose} className="drawer__close" aria-label="Close transaction detail"><X size={16} /></button>
         </div>

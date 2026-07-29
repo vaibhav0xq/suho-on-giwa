@@ -92,7 +92,7 @@ export function RecipientDrawer({
               <span className="pill pill--neutral">{isProfileActivityLoading ? "Loading" : `${recipientActivity.length} shown`}</span>
             </div>
             {isProfileActivityLoading ? (
-              <div className="empty">Loading guarded-send activity…</div>
+              <div className="empty">Loading guarded-send activity...</div>
             ) : recipientActivity.length === 0 ? (
               <div className="empty">No guarded-send activity for this recipient.</div>
             ) : (
@@ -103,7 +103,7 @@ export function RecipientDrawer({
                     <button key={`profile-activity-${send.id.toString()}`} onClick={() => onSelectSend(send)} className="info-line">
                       <span className="grow stack gap-2">
                         <b className="ladder__label">{direction}</b>
-                        <small className="trow__sub">{formatEther(send.amount)} ETH · {releaseLabel(send, now)}</small>
+                        <small className="trow__sub">{formatEther(send.amount)} ETH - {releaseLabel(send, now)}</small>
                       </span>
                       <span className={sendStatusPill(send)}>{sendStatus(send)}</span>
                     </button>

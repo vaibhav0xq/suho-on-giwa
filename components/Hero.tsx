@@ -14,7 +14,7 @@ export function Hero({ stations, children }: { stations: RouteStation[]; childre
           </h1>
           <p className="hero__lede">
             Suho reads identity and registry state, holds value in an escrow you can recall, and shows it
-            clear each checkpoint — checked, guarded, preconfirmed, included, final.
+            move through each checkpoint: checked, guarded, preconfirmed, included, final.
           </p>
           <div className="hero__cta">
             <a href="#check" className="btn btn--primary">

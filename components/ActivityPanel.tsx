@@ -88,7 +88,7 @@ export function ActivityPanel({
               onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); onSelect(send); } }}
             >
               <div className="trow__cell--route">
-                <p className="trow__route">{bucket} · {shortAddress(counterparty)}</p>
+                <p className="trow__route">{bucket} - {shortAddress(counterparty)}</p>
                 <p className="trow__sub">{direction === "Sent" ? "Recipient" : "Sender"}</p>
               </div>
               <div className="trow__cell--amount">

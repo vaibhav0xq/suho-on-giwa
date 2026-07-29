@@ -45,7 +45,7 @@ export function SendPanel({
     <section className="panel panel--pad" id="guard" data-reveal data-station aria-labelledby="send-title">
       <div className="card-head">
         <div>
-          <p className="card-kicker">Guard · station 3</p>
+          <p className="card-kicker">Guard - station 3</p>
           <h2 id="send-title" className="card-title mt-2">Route the send through escrow</h2>
         </div>
         <Clock3 className="card-icon" size={20} />
@@ -54,7 +54,7 @@ export function SendPanel({
       <div className="between mt-2">
         <label className="field__label" htmlFor="amount">Amount (ETH)</label>
         <button type="button" onClick={onRefreshBalance} className="balance-chip" disabled={balanceDisabled}>
-          Balance · {isBalanceLoading ? "reading" : balanceText}
+          Balance - {isBalanceLoading ? "reading" : balanceText}
         </button>
       </div>
 

@@ -83,7 +83,7 @@ export type SignedSession = {
 
 export type Tone = "ready" | "warn" | "idle" | "active";
 
-// Route/checkpoint model — the shared visual language for the protected route.
+// Route/checkpoint model -- the shared visual language for the protected route.
 export type StationState = "idle" | "active" | "done";
 export type RouteStation = {
   label: string;

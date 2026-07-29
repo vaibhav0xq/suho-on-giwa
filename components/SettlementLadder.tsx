@@ -14,14 +14,14 @@ type SettlementLadderProps = {
 };
 
 // Permanent centerpiece: the route's destination. Idle shows the path waiting;
-// a live send animates the value moving Submitted -> Preconfirmed -> Included -> Final.
+// a live send animates the value moving Submitted to Preconfirmed to Included to Final.
 export function SettlementLadder({ timelineSteps, activeStage, txStage, currentStageLabel, message, txHash }: SettlementLadderProps) {
   const idle = txStage === "idle";
   return (
     <section className="panel panel--pad panel--feature" id="settlement" data-reveal="scale" data-station aria-live="polite">
       <div className="card-head">
         <div>
-          <p className="card-kicker">Settlement · stations 4–6</p>
+          <p className="card-kicker">Settlement stations 4-6</p>
           <h2 className="card-title mt-2 settlement-headline">{idle ? "Settlement route" : currentStageLabel}</h2>
         </div>
         <span className={txStage === "error" ? "pill pill--danger" : activeStage > 0 ? "pill pill--ok" : "pill pill--neutral"}>

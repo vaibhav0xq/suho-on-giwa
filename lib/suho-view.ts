@@ -1,5 +1,5 @@
 // Pure, side-effect-free display + normalization helpers shared by page.tsx and
-// the presentational components. No React state here — just formatting and shaping.
+// the presentational components. No React state here -- just formatting and shaping.
 
 import { formatEther, parseEther } from "viem";
 import { AlertTriangle, BadgeCheck, Shield, XCircle } from "lucide-react";
@@ -25,7 +25,7 @@ export const NEUTRAL_ICON: IconType = Shield;
 
 export function shortAddress(address?: string) {
   if (!address) return "Not connected";
-  return `${address.slice(0, 6)}…${address.slice(-4)}`;
+  return `${address.slice(0, 6)}...${address.slice(-4)}`;
 }
 
 export function explorerTxUrl(hash: `0x${string}`) {

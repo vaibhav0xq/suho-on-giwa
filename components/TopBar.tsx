@@ -19,7 +19,7 @@ export function TopBar({ theme, onToggleTheme, chainOk, account, sessionReady, o
           <span className="brand__mark"><Shield size={18} /></span>
           <span className="stack">
             <span className="brand__name">Suho</span>
-            <span className="brand__sub">Protected settlement · GIWA Sepolia</span>
+            <span className="brand__sub">Protected settlement - GIWA Sepolia</span>
           </span>
         </a>
         <div className="topbar__actions">
@@ -33,7 +33,7 @@ export function TopBar({ theme, onToggleTheme, chainOk, account, sessionReady, o
           <button onClick={onConnect} className="btn btn--primary">
             <Wallet size={16} />
             {account ? (
-              <span><span className="hide-sm">{sessionReady ? "Signed" : "Unsigned"} · </span>{shortAddress(account)}</span>
+              <span><span className="hide-sm">{sessionReady ? "Signed" : "Unsigned"} - </span>{shortAddress(account)}</span>
             ) : "Connect wallet"}
           </button>
         </div>
