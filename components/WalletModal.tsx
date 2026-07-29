@@ -2,6 +2,18 @@ import { ChevronRight, Wallet, X } from "lucide-react";
 import type { WalletOption } from "../lib/suho-types";
 import { shortAddress } from "../lib/suho-view";
 
+function providerCaption(wallet: WalletOption) {
+  if (!wallet.rdns) return "Injected provider";
+
+  const known: Record<string, string> = {
+    "io.rabby": "Rabby detected",
+    "app.phantom": "Phantom detected",
+    "com.okex.wallet": "OKX detected",
+    "io.metamask": "MetaMask detected"
+  };
+
+  return known[wallet.rdns] ?? "Browser provider";
+}
 type WalletModalProps = {
   account: `0x${string}` | undefined;
   selectedWallet: WalletOption | undefined;
@@ -75,7 +87,7 @@ export function WalletModal({
               </span>
               <span className="grow stack">
                 <span className="wallet-option__name">{wallet.name}</span>
-                <span className="wallet-option__rdns">{wallet.rdns ?? "Injected provider"}</span>
+                <span className="wallet-option__rdns">{providerCaption(wallet)}</span>
               </span>
               <ChevronRight size={16} className="muted" />
             </button>

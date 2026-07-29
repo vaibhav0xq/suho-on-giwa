@@ -2718,3 +2718,60 @@ html[data-theme="dark"] .view--intro #s04 .step.cur {
     max-width: none;
   }
 }
+
+.scrim.scrim--center {
+  animation: walletScrimIn .22s ease-out both;
+}
+
+.scrim.scrim--center .modal {
+  transform-origin: 50% 46%;
+  animation: walletModalIn .34s cubic-bezier(.18,.88,.28,1) both;
+}
+
+.scrim.scrim--center .modal__head,
+.scrim.scrim--center .modal__hint,
+.scrim.scrim--center .active-wallet,
+.scrim.scrim--center .wallet-option,
+.scrim.scrim--center .empty {
+  animation: walletItemIn .34s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.scrim.scrim--center .modal__hint { animation-delay: .05s; }
+.scrim.scrim--center .active-wallet { animation-delay: .08s; }
+.scrim.scrim--center .wallet-option:nth-of-type(1) { animation-delay: .09s; }
+.scrim.scrim--center .wallet-option:nth-of-type(2) { animation-delay: .13s; }
+.scrim.scrim--center .wallet-option:nth-of-type(3) { animation-delay: .17s; }
+.scrim.scrim--center .wallet-option:nth-of-type(4) { animation-delay: .21s; }
+.scrim.scrim--center .wallet-option:nth-of-type(5) { animation-delay: .25s; }
+.scrim.scrim--center .wallet-option:nth-of-type(n+6) { animation-delay: .29s; }
+
+.wallet-option__rdns {
+  color: color-mix(in srgb, var(--ink2) 72%, var(--muted));
+}
+
+@keyframes walletScrimIn {
+  from { opacity: 0; backdrop-filter: blur(0); }
+  to { opacity: 1; backdrop-filter: blur(6px); }
+}
+
+@keyframes walletModalIn {
+  from { opacity: 0; transform: translateY(14px) scale(.975); filter: brightness(.94); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+@keyframes walletItemIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrim.scrim--center,
+  .scrim.scrim--center .modal,
+  .scrim.scrim--center .modal__head,
+  .scrim.scrim--center .modal__hint,
+  .scrim.scrim--center .active-wallet,
+  .scrim.scrim--center .wallet-option,
+  .scrim.scrim--center .empty {
+    animation: none !important;
+  }
+}
