@@ -2818,18 +2818,18 @@ html[data-theme="dark"] .view--intro #s04 .step.cur {
     max-width: 1480px;
   }
 }
-
 html[data-view="console"] .view--console .wbwrap,
 html[data-view="console"] .view--console .cbar__in {
-  width: min(calc(100vw - 88px), 1600px);
-  max-width: 1600px;
+  width: min(calc(100vw - 64px), 1880px);
+  max-width: 1880px;
   margin-left: auto;
   margin-right: auto;
   padding-inline: 0;
 }
 
 html[data-view="console"] .view--console .wb {
-  grid-template-columns: minmax(0, 1.08fr) minmax(440px, .92fr);
+  grid-template-columns: minmax(0, 1.14fr) minmax(500px, .86fr);
+  gap: 20px;
 }
 
 @media (max-width: 1180px) {
@@ -2840,22 +2840,5 @@ html[data-view="console"] .view--console .wb {
 
   html[data-view="console"] .view--console .wb {
     grid-template-columns: 1fr;
-  }
-}
-
-html[data-view="console"] .view--console .wbwrap,
-html[data-view="console"] .view--console .cbar__in {
-  width: min(calc(100vw - 56px), 1760px);
-  max-width: 1760px;
-}
-
-html[data-view="console"] .view--console .wb {
-  grid-template-columns: minmax(0, 1.06fr) minmax(460px, .94fr);
-}
-
-@media (min-width: 1800px) {
-  html[data-view="console"] .view--console .wbwrap,
-  html[data-view="console"] .view--console .cbar__in {
-    max-width: 1760px;
   }
 }
