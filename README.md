@@ -1,18 +1,28 @@
 # Suho
 
-Recipient checks and guarded sends on GIWA Sepolia.
-
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![React](https://img.shields.io/badge/React-18-149eca)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![Solidity](https://img.shields.io/badge/Solidity-0.8.24-363636)
+![Hardhat](https://img.shields.io/badge/Hardhat-2-f5c542)
+![Viem](https://img.shields.io/badge/Viem-2-646cff)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-38bdf8)
 ![Network](https://img.shields.io/badge/GIWA-Sepolia-10b981)
+
+Recipient checks and guarded sends on GIWA Sepolia.
 
 Suho is a testnet app for checking a recipient before value is sent. It combines a web console, GIWA Sepolia reads, and a small contract set for registry checks and guarded sends.
 
+The project is built around a simple transfer habit: measure the recipient first, then release value through a route that keeps settlement state visible.
+
+## Overview
+
+Most wallet send flows treat the recipient address as a final input. Suho adds a check step before the send is signed. The app resolves the recipient, reads the current registry and trust state, and then lets the sender submit a guarded send when the reading is acceptable.
+
 The current build has two main screens:
 
-- Overview: shows the assay route and how a recipient reading moves through the flow.
-- Console: connects a wallet, checks a recipient, shows registry state, submits guarded sends, and tracks activity.
+- Overview: explains the assay route, checkpoints, recipient reading, and settlement path.
+- Console: connects a wallet, signs a session, checks a recipient, shows registry state, submits guarded sends, and tracks activity.
 
 ## Network
 
@@ -26,25 +36,46 @@ Suho targets GIWA Sepolia.
 | Explorer | `https://sepolia-explorer.giwa.io` |
 | Docs | `https://docs.giwa.io` |
 
-## What Is Included
+GIWA is EVM-compatible, so the contracts use a standard Solidity, Hardhat, and Viem workflow.
 
-- Next.js app router UI
-- Wallet session and recipient check flow
-- UP-style identifier and address input handling
-- Guarded send contract integration
-- Activity index for sent and incoming guarded sends
-- Solidity contracts for registry, trust oracle, and guarded sends
-- Deployment and verification scripts for GIWA Sepolia
+## Features
+
+- Wallet connection and signed console session
+- Address and UP-style recipient input handling
+- Recipient status reads from GIWA Sepolia contracts
+- Registry verdict display before guarded release
+- Guarded send submission with a recall window
+- Sender cancel flow before release
+- Recipient claim flow after release
+- Sent, incoming, and history activity tabs
+- Local activity index for development
+- Postgres schema for managed activity storage
+- GIWA deployment and verification scripts
 
 ## Contracts
 
 Current GIWA Sepolia deployment metadata is stored in [`deployments.json`](./deployments.json).
 
-| Contract | Address |
-| --- | --- |
-| SuhoRegistry | `0x8c76e459ff950d24fe8bf3ac8374049cf3b4a77d` |
-| TrustOracle | `0x8a94bca28a5241c3aba272d5b6fbdf2c71e6603d` |
-| GuardedSend | `0xfb19b30114fbc6b785aee4fd2f81cfd44e2ffa29` |
+| Contract | Address | Purpose |
+| --- | --- | --- |
+| SuhoRegistry | `0x8c76e459ff950d24fe8bf3ac8374049cf3b4a77d` | Recipient reports and registry state |
+| TrustOracle | `0x8a94bca28a5241c3aba272d5b6fbdf2c71e6603d` | Recipient verdict reads |
+| GuardedSend | `0xfb19b30114fbc6b785aee4fd2f81cfd44e2ffa29` | Recallable guarded send route |
+
+The current `GuardedSend` deployment uses a 600 second recall window.
+
+## Flow
+
+```txt
+recipient input
+  -> resolve address / identifier
+  -> read trust oracle and registry state
+  -> show verdict in console
+  -> submit guarded send
+  -> cancel during recall window or claim after release
+```
+
+The UI keeps the route state visible so a user can tell whether a send is waiting, recallable, cancelled, claimed, or ready to claim.
 
 ## Repository Layout
 
@@ -57,6 +88,15 @@ docs/         project notes and implementation docs
 scripts/      deployment and verification scripts
 public/       static assets
 ```
+
+## App Routes
+
+| Path | Purpose |
+| --- | --- |
+| `/` | Overview and console UI |
+| `/api/activity-index` | Reads indexed guarded send activity |
+| `/api/activity-index/sync` | Syncs guarded send events |
+| `/api/pending-sends` | Reads pending sends for wallet activity |
 
 ## Setup
 
@@ -74,9 +114,12 @@ Common local values:
 ```txt
 GIWA_RPC_URL=
 GIWA_FLASHBLOCKS_RPC_URL=
+ETHEREUM_RPC_URL=
 DEPLOYER_PRIVATE_KEY=
 GIWA_EXPLORER_API_KEY=
 ```
+
+`GIWA_RPC_URL` falls back to `https://sepolia-rpc.giwa.io` when it is not set.
 
 ## Commands
 
@@ -96,7 +139,7 @@ npm run deploy:phase2
 npm run verify:deployments
 ```
 
-## Docs
+## Documentation
 
 - [Architecture](./docs/architecture.md)
 - [Contracts](./docs/contracts.md)
@@ -104,6 +147,8 @@ npm run verify:deployments
 - [GIWA Sepolia](./docs/giwa-sepolia.md)
 - [Activity store](./docs/activity-store.md)
 
-## Status
+## Security
 
-This is testnet software. Do not use it with mainnet funds without a contract audit, production monitoring, and proper key management.
+Suho is testnet software. Do not use it with mainnet funds without a contract audit, production monitoring, and proper key management.
+
+Do not commit `.env` files, private keys, wallet secrets, local databases, build output, or production logs.
