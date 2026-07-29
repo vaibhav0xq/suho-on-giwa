@@ -2796,3 +2796,25 @@ html[data-theme="dark"] .view--intro #s04 .step.cur {
     max-width: 1680px;
   }
 }
+
+@media (min-width: 1180px) {
+  .view--console .wbwrap,
+  .view--console .cbar__in {
+    width: min(calc(100vw - 96px), 1480px);
+    max-width: 1480px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-inline: 0;
+  }
+
+  .view--console .wb {
+    grid-template-columns: minmax(0, 1.12fr) minmax(390px, .88fr);
+  }
+}
+
+@media (min-width: 1600px) {
+  .view--console .wbwrap,
+  .view--console .cbar__in {
+    max-width: 1480px;
+  }
+}
