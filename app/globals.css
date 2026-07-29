@@ -2818,3 +2818,27 @@ html[data-theme="dark"] .view--intro #s04 .step.cur {
     max-width: 1480px;
   }
 }
+
+html[data-view="console"] .view--console .wbwrap,
+html[data-view="console"] .view--console .cbar__in {
+  width: min(calc(100vw - 88px), 1600px);
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: 0;
+}
+
+html[data-view="console"] .view--console .wb {
+  grid-template-columns: minmax(0, 1.08fr) minmax(440px, .92fr);
+}
+
+@media (max-width: 1180px) {
+  html[data-view="console"] .view--console .wbwrap,
+  html[data-view="console"] .view--console .cbar__in {
+    width: min(100% - 32px, 1180px);
+  }
+
+  html[data-view="console"] .view--console .wb {
+    grid-template-columns: 1fr;
+  }
+}
