@@ -1,31 +1,36 @@
 # Security
 
-Suho is testnet software.
+Suho is currently a GIWA Sepolia testnet project.
 
-Do not use this repository with mainnet funds unless the contracts, deployment flow, and operational setup have been reviewed for production use.
+The contracts in this repo are useful for testing the guarded-send flow, but they should not be treated as production-ready mainnet contracts.
 
-## Do Not Commit
+## Scope
 
-- Private keys
-- Seed phrases
-- `.env` files
-- RPC credentials
-- Wallet secrets
-- Local databases
-- Build output
-- Production logs
+Security reports should be about code in this repository:
 
-## Contract Safety
+- Solidity contracts in `contracts/src/`
+- API routes in `app/api/`
+- chain/client helpers in `lib/`
+- wallet and transaction flows in the web app
 
-The current contracts are intended for GIWA Sepolia testing. Before using similar logic in production, review at minimum:
-
-- recall window behavior
-- sender cancellation path
-- recipient claim path
-- registry report economics
-- oracle assumptions
-- deployment ownership and upgrade policy
+Issues in GIWA, Dojang, EAS, wallet extensions, RPC providers, or Blockscout should be reported to those projects directly.
 
 ## Reporting
 
-Open an issue for reproducible problems in the public testnet app or contracts. Do not include private keys, wallet secrets, or sensitive user data in reports.
+For reproducible issues, open a GitHub issue with:
+
+- affected file or contract
+- steps to reproduce
+- expected result
+- actual result
+- transaction hash or test case, if available
+
+Do not post private keys, seed phrases, wallet secrets, RPC credentials, or private user data.
+
+## Local Secrets
+
+Keep deployment keys and RPC credentials in a local `.env` file. The repo ignores env files and does not include an env example because values are deployment-specific.
+
+## Before Production Use
+
+Before adapting this flow for production, review the recall window, cancellation path, claim path, registry report rules, oracle assumptions, and deployment ownership model.
