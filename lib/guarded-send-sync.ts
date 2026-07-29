@@ -123,7 +123,7 @@ export async function syncGuardedSendsForAddress(address: `0x${string}`, role: "
   } catch (error) {
     return {
       ...result,
-      storeWarning: error instanceof Error ? error.message : "Activity index write failed."
+      cacheWarning: error instanceof Error ? error.message : "Activity cache write failed."
     };
   }
 }
@@ -139,9 +139,11 @@ export async function syncGuardedSendsByBlockCursor(lastSyncedBlock?: string | u
 
   const toBlock = fromBlock + blockSpan - 1n > latestBlock ? latestBlock : fromBlock + blockSpan - 1n;
   const result = await syncLogs({ fromBlock, toBlock });
-  await upsertGuardedSends(result.rows, toBlock);
+  try {
+    await upsertGuardedSends(result.rows, toBlock);
+  } catch {
+    // Hosted serverless runtimes may not provide writable project storage.
+  }
 
   return { fromBlock, toBlock, latestBlock, eventCount: result.eventCount, advanced: true };
 }
-
-

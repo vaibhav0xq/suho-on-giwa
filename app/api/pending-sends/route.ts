@@ -7,12 +7,17 @@ import { syncGuardedSendsForAddress } from "../../../lib/guarded-send-sync";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-function mergeRows(indexRows: GuardedSendInput[], chainRows: GuardedSendInput[], includeClosed: boolean) {
-  const merged = new Map<string, GuardedSendInput>();
-  for (const row of indexRows) merged.set(row.id, row);
-  for (const row of chainRows) merged.set(row.id, row);
+function rowKey(row: GuardedSendInput) {
+  return row.id;
+}
 
-  return Array.from(merged.values())
+function mergeRows(primary: GuardedSendInput[], fallback: GuardedSendInput[], includeClosed: boolean) {
+  const rows = new Map<string, GuardedSendInput>();
+
+  for (const row of fallback) rows.set(rowKey(row), row);
+  for (const row of primary) rows.set(rowKey(row), row);
+
+  return Array.from(rows.values())
     .filter((row) => includeClosed || (!row.claimed && !row.cancelled))
     .sort((a, b) => Number(BigInt(b.id) - BigInt(a.id)));
 }
@@ -29,18 +34,24 @@ export async function GET(request: Request) {
 
   const address = getAddress(addressInput);
   let syncWarning: string | undefined;
-  let chainRows: GuardedSendInput[] = [];
+  let syncedRows: GuardedSendInput[] = [];
 
   try {
-    const sync = await syncGuardedSendsForAddress(address, role);
-    chainRows = sync.rows;
-    syncWarning = "storeWarning" in sync ? sync.storeWarning : undefined;
+    const syncResult = await syncGuardedSendsForAddress(address, role);
+    syncedRows = syncResult.rows;
+    syncWarning = "cacheWarning" in syncResult ? syncResult.cacheWarning : undefined;
   } catch (error) {
     syncWarning = error instanceof Error ? error.message : "Guarded send sync failed.";
   }
 
-  const indexRows = await readGuardedSendsForAddress(address, role, includeClosed);
-  const rows = mergeRows(indexRows, chainRows, includeClosed);
+  let indexedRows: GuardedSendInput[] = [];
+  try {
+    indexedRows = await readGuardedSendsForAddress(address, role, includeClosed);
+  } catch (error) {
+    syncWarning = syncWarning ?? (error instanceof Error ? error.message : "Activity index read failed.");
+  }
+
+  const rows = mergeRows(syncedRows, indexedRows, includeClosed);
 
   return NextResponse.json(syncWarning ? { rows, syncWarning } : { rows });
 }
