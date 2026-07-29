@@ -2842,3 +2842,20 @@ html[data-view="console"] .view--console .wb {
     grid-template-columns: 1fr;
   }
 }
+
+html[data-view="console"] .view--console .wbwrap,
+html[data-view="console"] .view--console .cbar__in {
+  width: min(calc(100vw - 56px), 1760px);
+  max-width: 1760px;
+}
+
+html[data-view="console"] .view--console .wb {
+  grid-template-columns: minmax(0, 1.06fr) minmax(460px, .94fr);
+}
+
+@media (min-width: 1800px) {
+  html[data-view="console"] .view--console .wbwrap,
+  html[data-view="console"] .view--console .cbar__in {
+    max-width: 1760px;
+  }
+}
