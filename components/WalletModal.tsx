@@ -3,16 +3,16 @@ import type { WalletOption } from "../lib/suho-types";
 import { shortAddress } from "../lib/suho-view";
 
 function providerCaption(wallet: WalletOption) {
-  if (!wallet.rdns) return "Injected provider";
+  if (!wallet.rdns) return "Browser extension";
 
   const known: Record<string, string> = {
-    "io.rabby": "Rabby detected",
-    "app.phantom": "Phantom detected",
-    "com.okex.wallet": "OKX detected",
-    "io.metamask": "MetaMask detected"
+    "io.rabby": "Ready to connect",
+    "app.phantom": "Ready to connect",
+    "com.okex.wallet": "Ready to connect",
+    "io.metamask": "Ready to connect"
   };
 
-  return known[wallet.rdns] ?? "Browser provider";
+  return known[wallet.rdns] ?? "Browser extension";
 }
 type WalletModalProps = {
   account: `0x${string}` | undefined;
@@ -79,7 +79,7 @@ export function WalletModal({
           ) : null}
 
           {wallets.length === 0 ? (
-            <div className="empty">No injected wallet detected in this browser.</div>
+            <div className="empty">No wallet extension found in this browser.</div>
           ) : wallets.map((wallet) => (
             <button key={wallet.id} onClick={() => onConnectWallet(wallet)} disabled={isConnectingWallet} className="wallet-option">
               <span className="wallet-option__icon">

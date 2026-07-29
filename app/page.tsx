@@ -943,7 +943,7 @@ export default function Home() {
 
   const connect = useCallback(async () => {
     setWalletPanelOpen(true);
-    setMessage(wallets.length === 0 ? "No injected wallet detected in this browser." : "Choose a wallet provider to connect.");
+    setMessage(wallets.length === 0 ? "No wallet extension found in this browser." : "Choose a wallet provider to connect.");
   }, [wallets.length]);
 
   const requireSignedSession = useCallback(async () => {

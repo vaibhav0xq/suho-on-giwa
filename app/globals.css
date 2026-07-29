@@ -2705,7 +2705,7 @@ html[data-theme="dark"] .view--intro #s04 .step.cur {
   }
 
   .view--console .wb {
-    grid-template-columns: minmax(0, 1.2fr) minmax(420px, .8fr);
+    grid-template-columns: minmax(720px, 1.1fr) minmax(420px, .9fr);
   }
 }
 
@@ -2773,5 +2773,26 @@ html[data-theme="dark"] .view--intro #s04 .step.cur {
   .scrim.scrim--center .wallet-option,
   .scrim.scrim--center .empty {
     animation: none !important;
+  }
+}
+
+@media (min-width: 1180px) {
+  .view--console .wbwrap,
+  .view--console .cbar__in {
+    width: min(calc(100vw - 72px), 1680px);
+    max-width: 1680px;
+    margin-left: clamp(24px, 2.4vw, 44px);
+    margin-right: auto;
+  }
+
+  .view--console .wb {
+    grid-template-columns: minmax(680px, 1.08fr) minmax(420px, .92fr);
+  }
+}
+
+@media (min-width: 1600px) {
+  .view--console .wbwrap,
+  .view--console .cbar__in {
+    max-width: 1680px;
   }
 }
