@@ -2684,3 +2684,37 @@ html[data-theme="dark"] .view--intro #s04 .step.cur {
   }
 }
 
+
+@media (min-width: 1180px) {
+  .view--intro .wrap,
+  .view--intro #s01 .wrap,
+  .view--intro :where(#s02,#s03,#s04,#s05,#s06) > .wrap {
+    width: calc(100vw - 56px);
+    max-width: 1960px;
+    margin-left: clamp(24px, 2.4vw, 44px);
+    margin-right: auto;
+    padding-inline: clamp(16px, 1.4vw, 28px);
+  }
+
+  .view--console .wbwrap,
+  .view--console .cbar__in {
+    width: calc(100vw - 72px);
+    max-width: 1960px;
+    margin-left: clamp(24px, 2.4vw, 44px);
+    margin-right: auto;
+  }
+
+  .view--console .wb {
+    grid-template-columns: minmax(0, 1.2fr) minmax(420px, .8fr);
+  }
+}
+
+@media (min-width: 1600px) {
+  .view--intro .wrap,
+  .view--intro #s01 .wrap,
+  .view--intro :where(#s02,#s03,#s04,#s05,#s06) > .wrap,
+  .view--console .wbwrap,
+  .view--console .cbar__in {
+    max-width: none;
+  }
+}
