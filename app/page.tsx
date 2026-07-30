@@ -104,17 +104,20 @@ const PRIMARY_HOST = "thesuho.in";
 const CONSOLE_HOST = "console.thesuho.in";
 
 function isConsoleHost(hostname: string) {
-  return hostname.toLowerCase().startsWith("console.");
+  return hostname.toLowerCase() === CONSOLE_HOST;
 }
 
+function isPrimaryHost(hostname: string) {
+  return hostname.toLowerCase() === PRIMARY_HOST;
+}
 
 function overviewUrl() {
-  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") return "/";
+  if (!isConsoleHost(window.location.hostname)) return undefined;
   return `${window.location.protocol}//${PRIMARY_HOST}`;
 }
 
 function consoleUrl() {
-  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") return undefined;
+  if (!isPrimaryHost(window.location.hostname)) return undefined;
   return `${window.location.protocol}//${CONSOLE_HOST}`;
 }
 
@@ -248,8 +251,9 @@ export default function Home() {
       return;
     }
 
-    if (isConsoleHost(window.location.hostname)) {
-      window.location.assign(overviewUrl());
+    const target = overviewUrl();
+    if (target) {
+      window.location.assign(target);
       return;
     }
 
