@@ -37,6 +37,8 @@ GIWA_EXPLORER_API_KEY=
 
 `GIWA_RPC_URL` falls back to `https://sepolia-rpc.giwa.io` when not set.
 
+Keep `DEPLOYER_PRIVATE_KEY` local. It is used only by contract deployment scripts and is not needed by the Vercel app.
+
 ## Checks
 
 ```bash

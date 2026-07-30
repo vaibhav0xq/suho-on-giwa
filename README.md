@@ -127,6 +127,7 @@ GIWA_EXPLORER_API_KEY=
 ```
 
 `GIWA_RPC_URL` falls back to `https://sepolia-rpc.giwa.io` when it is not set.
+`DEPLOYER_PRIVATE_KEY` is only for local contract deployment scripts. It is not required for the hosted web app and should never be added to public frontend environments.
 
 ## Commands
 
@@ -154,6 +155,7 @@ npm run verify:deployments
 - [Development](./docs/development.md)
 - [GIWA Sepolia](./docs/giwa-sepolia.md)
 - [Activity store](./docs/activity-store.md)
+- [Team introduction](./docs/submission-team-introduction.md)
 
 ## Security
 
