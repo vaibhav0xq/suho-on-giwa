@@ -7,7 +7,7 @@ import { GIWA_RPC_URL, GIWA_SEPOLIA } from "./giwa";
 const client = createPublicClient({ chain: GIWA_SEPOLIA, transport: http(GIWA_RPC_URL) });
 const guardedDeploymentBlock = BigInt(deployments.contracts.GuardedSend.blockNumber);
 const DEFAULT_SYNC_BLOCK_SPAN = 4_000n;
-const DEFAULT_EVENT_BLOCK_SPAN = 4_000n;
+const DEFAULT_EVENT_BLOCK_SPAN = 50_000n;
 
 type PendingTuple = readonly [`0x${string}`, `0x${string}`, bigint, bigint, boolean, boolean];
 
