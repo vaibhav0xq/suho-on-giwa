@@ -4,11 +4,12 @@ Suho is split into a web app, contract layer, and activity index.
 
 ## Web App
 
-The Next.js app lives in `app/` and uses client-side wallet interaction for the main console. API routes are used for local activity indexing and sync endpoints.
+The Next.js app lives in `app/` and uses client-side wallet interaction for the main console. The overview is available at `/`, and the console is available at `/console`. API routes are used for activity indexing and sync endpoints.
 
 Key files:
 
-- `app/page.tsx` - overview and console route
+- `app/page.tsx` - shared overview and console experience
+- `app/console/page.tsx` - console route entry
 - `app/api/activity-index/route.ts` - activity index reads
 - `app/api/activity-index/sync/route.ts` - activity sync endpoint
 - `app/api/pending-sends/route.ts` - pending guarded send reads

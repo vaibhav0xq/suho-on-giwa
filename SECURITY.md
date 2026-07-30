@@ -1,6 +1,6 @@
 # Security
 
-Suho is currently a GIWA Sepolia testnet project.
+Suho is currently a GIWA Sepolia testnet project available at `https://thesuho.xyz`.
 
 The contracts in this repo are useful for testing the guarded-send flow, but they should not be treated as production-ready mainnet contracts.
 

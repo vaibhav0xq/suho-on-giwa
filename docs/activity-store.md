@@ -9,11 +9,11 @@ Suho now reads and writes activity through `ActivityStore` instead of direct fil
 - Git behavior: generated index data is ignored; only `data/.gitkeep` is tracked.
 - Source: `lib/local-activity-store.ts`
 
-This is suitable for local development and live GIWA testing. It is not the final production database.
+The hosted testnet build can read wallet-specific activity directly from GIWA events, so a managed database is optional for the current scope.
 
-## Production Store Target
+## Optional Managed Store
 
-Use Postgres through Supabase or Neon.
+Use Postgres through Supabase, Neon, or another managed Postgres service if the project needs faster global history or analytics later.
 
 Required env when enabled later:
 
@@ -39,7 +39,7 @@ The API and GIWA sync modules should only call the store contract/facade. Do not
 1. `lib/guarded-send-sync.ts` reads live GIWA `GuardedSend.Sent` logs.
 2. It reads `sendAt(id)` to get current `claimed/cancelled` state.
 3. It writes normalized records through `ActivityStore`.
-4. API routes return indexed rows.
+4. API routes merge chain-synced rows with indexed rows and return current activity.
 
 Endpoints:
 

@@ -1,6 +1,6 @@
 # Suho
 
-![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![Next.js](https://img.shields.io/badge/Next.js-16-black)
 ![React](https://img.shields.io/badge/React-18-149eca)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![Solidity](https://img.shields.io/badge/Solidity-0.8.24-363636)
@@ -13,16 +13,17 @@ Recipient checks and guarded sends on GIWA Sepolia.
 
 Suho is a testnet app for checking a recipient before value is sent. It combines a web console, GIWA Sepolia reads, and a small contract set for registry checks and guarded sends.
 
-The project is built around a simple transfer habit: measure the recipient first, then release value through a route that keeps settlement state visible.
+Live app: [thesuho.xyz](https://thesuho.xyz)
+Console: [thesuho.xyz/console](https://thesuho.xyz/console)
 
 ## Overview
 
-Most wallet send flows treat the recipient address as a final input. Suho adds a check step before the send is signed. The app resolves the recipient, reads the current registry and trust state, and then lets the sender submit a guarded send when the reading is acceptable.
+Most wallet send flows treat the recipient address as a final input. Suho adds a check step before the send is signed. The app resolves the recipient, reads registry and trust state, and lets the sender submit a guarded send when the reading is acceptable.
 
 The current build has two main screens:
 
 - Overview: explains the assay route, checkpoints, recipient reading, and settlement path.
-- Console: connects a wallet, signs a session, checks a recipient, shows registry state, submits guarded sends, and tracks activity.
+- Console: connects a wallet, signs a session, checks a recipient, submits guarded sends, and tracks activity.
 
 ## Network
 
@@ -44,12 +45,13 @@ GIWA is EVM-compatible, so the contracts use a standard Solidity, Hardhat, and V
 - Address and UP-style recipient input handling
 - Recipient status reads from GIWA Sepolia contracts
 - Registry verdict display before guarded release
-- Guarded send submission with a recall window
+- Guarded send submission with a 600 second recall window
 - Sender cancel flow before release
 - Recipient claim flow after release
-- Sent, incoming, and history activity tabs
+- All, Sent, Incoming, and Closed activity tabs
+- On-chain activity sync from `GuardedSend` events
 - Local activity index for development caching
-- Postgres schema for optional managed activity storage
+- Optional Postgres schema for managed activity storage later
 - GIWA deployment and verification scripts
 
 ## Contracts
@@ -75,7 +77,7 @@ recipient input
   -> cancel during recall window or claim after release
 ```
 
-The UI keeps the route state visible so a user can tell whether a send is waiting, recallable, cancelled, claimed, or ready to claim.
+The UI keeps route state visible so a user can tell whether a send is waiting, recallable, cancelled, claimed, or ready to claim.
 
 ## Repository Layout
 
@@ -97,10 +99,11 @@ Suho does not require a hosted database for the current public testnet build. Th
 
 | Path | Purpose |
 | --- | --- |
-| `/` | Overview and console UI |
+| `/` | Overview |
+| `/console` | Wallet console and guarded send workflow |
 | `/api/activity-index` | Reads indexed guarded send activity |
 | `/api/activity-index/sync` | Syncs guarded send events |
-| `/api/pending-sends` | Reads pending sends for wallet activity |
+| `/api/pending-sends` | Reads wallet activity from GIWA events and the local index |
 
 ## Setup
 
@@ -128,6 +131,7 @@ GIWA_EXPLORER_API_KEY=
 ## Commands
 
 ```bash
+npm run lint
 npm run typecheck
 npm run build
 npm run contracts:compile
@@ -156,4 +160,3 @@ npm run verify:deployments
 Suho is testnet software. Do not use it with mainnet funds without a contract audit, production monitoring, and proper key management.
 
 Do not commit `.env` files, private keys, wallet secrets, local databases, build output, or production logs.
-

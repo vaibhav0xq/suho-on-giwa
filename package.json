@@ -9,7 +9,7 @@
     "phase0:upid": "tsx scripts/phase0/up-id-resolution.ts",
     "phase0:flashblocks": "tsx scripts/phase0/flashblocks-status.ts",
     "phase0": "npm run phase0:dojang && npm run phase0:schema && npm run phase0:upid && npm run phase0:flashblocks",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "lint": "eslint . --max-warnings=0",
     "contracts:compile": "hardhat compile",
     "contracts:test": "hardhat test",
@@ -27,8 +27,8 @@
     "autoprefixer": "^10.5.4",
     "dotenv": "^16.4.5",
     "lucide-react": "^1.26.0",
-    "next": "^14.2.35",
-    "postcss": "^8.5.22",
+    "next": "^16.2.12",
+    "postcss": "^8.5.25",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "viem": "^2.33.0"
@@ -37,10 +37,15 @@
     "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
     "@types/node": "^20.14.10",
     "@types/react": "19.2.17",
-    "eslint": "^8.57.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.2.12",
     "hardhat": "^2.26.0",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3"
+  },
+  "overrides": {
+    "postcss": "^8.5.25",
+    "sharp": "^0.35.3"
   }
 }

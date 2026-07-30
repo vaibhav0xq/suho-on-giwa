@@ -19,7 +19,7 @@ npm install
 npm run dev
 ```
 
-The default Next.js URL is `http://localhost:3000`.
+The default Next.js URL is `http://localhost:3000`. The overview is served at `/`; the console is served at `/console`. The public domain is `https://thesuho.xyz`.
 
 ## Environment
 
@@ -40,6 +40,7 @@ GIWA_EXPLORER_API_KEY=
 ## Checks
 
 ```bash
+npm run lint
 npm run typecheck
 npm run build
 npm run contracts:compile
