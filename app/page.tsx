@@ -1270,7 +1270,7 @@ export default function Home() {
     { id: "all", label: "All", count: activityRows.length },
     { id: "active", label: "Sent", count: pendingSends.length },
     { id: "incoming", label: "Incoming", count: incomingSends.length },
-    { id: "history", label: "History", count: sendHistory.length }
+    { id: "history", label: "Closed", count: sendHistory.length }
   ];
 
   const activityEmptyCopy = !account
@@ -1280,7 +1280,7 @@ export default function Home() {
       : activityTab === "incoming"
         ? "No incoming guarded sends."
         : activityTab === "history"
-          ? "No completed guarded sends."
+          ? "No closed guarded sends."
           : "No guarded sends indexed for this wallet.";
 
   const sessionLabel = sessionReady ? sessionAgeLabel(signedSession, now) : "Signature needed";
