@@ -100,40 +100,9 @@ function getInitialTheme(): Theme {
   return stored === "light" ? "light" : "dark";
 }
 
-const TEMP_HOST_SUFFIXES = [".vercel.app", "localhost", "127.0.0.1"] as const;
-
-function normalizedHostname() {
-  return window.location.hostname.toLowerCase();
-}
-
-function isTemporaryHost(hostname: string) {
-  const host = hostname.toLowerCase();
-  return TEMP_HOST_SUFFIXES.some((suffix) => host === suffix || host.endsWith(suffix));
-}
-
-function baseHostname(hostname: string) {
-  const host = hostname.toLowerCase();
-  return host.startsWith("console.") ? host.slice("console.".length) : host;
-}
-
-function isConsoleHost(hostname: string) {
-  return !isTemporaryHost(hostname) && hostname.toLowerCase().startsWith("console.");
-}
-
-function overviewUrl() {
-  if (!isConsoleHost(window.location.hostname)) return undefined;
-  return `${window.location.protocol}//${baseHostname(window.location.hostname)}`;
-}
-
-function consoleUrl() {
-  const host = normalizedHostname();
-  if (isTemporaryHost(host) || isConsoleHost(host)) return undefined;
-  return `${window.location.protocol}//console.${baseHostname(host)}`;
-}
-
 function getInitialView() {
   if (typeof window === "undefined") return "intro" as const;
-  return isConsoleHost(window.location.hostname) ? "console" as const : "intro" as const;
+  return window.location.pathname === "/console" ? "console" as const : "intro" as const;
 }
 
 function createNonce() {
@@ -252,18 +221,8 @@ export default function Home() {
 
   const routeToView = useCallback((nextView: "intro" | "console") => {
     if (nextView === "console") {
-      const target = consoleUrl();
-      if (target) {
-        window.location.assign(target);
-        return;
-      }
+      if (window.location.pathname !== "/console") window.history.pushState({}, "", "/console");
       setView("console");
-      return;
-    }
-
-    const target = overviewUrl();
-    if (target) {
-      window.location.assign(target);
       return;
     }
 
