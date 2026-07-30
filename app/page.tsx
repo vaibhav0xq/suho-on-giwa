@@ -715,7 +715,10 @@ export default function Home() {
           activeRows = await readContractPending();
         }
         setPendingSends(activeRows);
-        setSendHistory(allRows.filter((row) => row.claimed || row.cancelled));
+        setSendHistory((current) => {
+          const merged = [...current, ...allRows.filter((row) => row.claimed || row.cancelled)];
+          return [...new Map(merged.map((row) => [row.id.toString(), row])).values()].sort((a, b) => Number(b.id - a.id));
+        });
         if (activeRows.length >= (options.minRows ?? 0)) break;
       } catch (error) {
         lastError = error;
@@ -1145,6 +1148,8 @@ export default function Home() {
       await trackTx(hash);
       await refreshIncoming(account, { silent: true });
       await refreshPending(account, { silent: true });
+      setActivityTab("history");
+      setMessage("Claim confirmed. Funds released to the recipient wallet.");
     } catch (error) {
       setTxStage("error");
       setMessage(error instanceof Error ? error.message.split("\n")[0] ?? "Claim failed." : "Claim failed.");
@@ -1564,7 +1569,3 @@ function IntroSection({ id, no, kicker, title, body, children }: { id: string; n
     </section>
   );
 }
-
-
-
-
