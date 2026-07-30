@@ -32,7 +32,7 @@ Suho is built on GIWA Sepolia and uses GIWA RPC endpoints, EVM-compatible Solidi
 
 ## Experience
 
-Vaibhav has experience building user-facing crypto applications, identity and wallet flows, testnet integrations, and polished developer-facing repositories. Suho continues that work by focusing on a narrow transaction-safety problem: helping users avoid blind sends by adding a measurable recipient check before release.
+Vaibhav has experience building user-facing crypto applications, identity and wallet flows, testnet integrations, and public developer-facing repositories. Suho continues that work by focusing on a narrow transaction-safety problem: helping users avoid blind sends by adding a measurable recipient check before release.
 
 ## Current Status
 

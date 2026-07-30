@@ -16,14 +16,15 @@ Suho is a testnet app for checking a recipient before value is sent. It combines
 Live app: [thesuho.xyz](https://thesuho.xyz)
 Console: [thesuho.xyz/console](https://thesuho.xyz/console)
 
-## Product Preview
+## Interface
 
 | Overview | Console |
 | --- | --- |
 | ![Suho overview landing screen](./public/dashboard-begin.png) | ![Suho console recipient assay screen](./public/console-begin.png) |
-| Assay overview with route checkpoints, recipient reading, and guarded-send context. | Wallet console for measuring a recipient, sending through GuardedSend, and tracking settlement state. |
+| Assay route, checkpoints, recipient reading, and settlement path. | Wallet session, recipient measurement, guarded send, and settlement status. |
 | ![Suho overview sample reading](./public/dashboard-ending.png) | ![Suho console activity ledger](./public/console-ending.png) |
-| Sample reading view with registry status, route state, and release context. | Activity ledger with All, Sent, Incoming, and Closed guarded-send history. |
+| Protocol view for a live reading before release. | On-chain activity split across All, Sent, Incoming, and Closed states. |
+
 ## Overview
 
 Most wallet send flows treat the recipient address as a final input. Suho adds a check step before the send is signed. The app resolves the recipient, reads registry and trust state, and lets the sender submit a guarded send when the reading is acceptable.
