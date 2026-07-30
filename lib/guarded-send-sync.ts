@@ -7,6 +7,7 @@ import { GIWA_RPC_URL, GIWA_SEPOLIA } from "./giwa";
 const client = createPublicClient({ chain: GIWA_SEPOLIA, transport: http(GIWA_RPC_URL) });
 const guardedDeploymentBlock = BigInt(deployments.contracts.GuardedSend.blockNumber);
 const DEFAULT_SYNC_BLOCK_SPAN = 4_000n;
+const DEFAULT_EVENT_BLOCK_SPAN = 4_000n;
 
 type PendingTuple = readonly [`0x${string}`, `0x${string}`, bigint, bigint, boolean, boolean];
 
@@ -87,14 +88,25 @@ async function syncLogs(args: {
   sender?: `0x${string}` | undefined;
   recipient?: `0x${string}` | undefined;
 }) {
-  const logs = await client.getContractEvents({
-    address: contracts.guardedSend,
-    abi: guardedSendAbi,
-    eventName: "Sent",
-    args: { sender: args.sender, recipient: args.recipient },
-    fromBlock: args.fromBlock,
-    toBlock: args.toBlock
-  });
+  const latestBlock = args.toBlock === "latest" ? await client.getBlockNumber() : args.toBlock;
+  const logs = [];
+  let fromBlock = args.fromBlock;
+
+  while (fromBlock <= latestBlock) {
+    const toBlock = fromBlock + DEFAULT_EVENT_BLOCK_SPAN - 1n > latestBlock
+      ? latestBlock
+      : fromBlock + DEFAULT_EVENT_BLOCK_SPAN - 1n;
+    const chunk = await client.getContractEvents({
+      address: contracts.guardedSend,
+      abi: guardedSendAbi,
+      eventName: "Sent",
+      args: { sender: args.sender, recipient: args.recipient },
+      fromBlock,
+      toBlock
+    });
+    logs.push(...chunk);
+    fromBlock = toBlock + 1n;
+  }
 
   const eventRows = logs
     .map((log) => ({ ...log.args, transactionHash: log.transactionHash }))
