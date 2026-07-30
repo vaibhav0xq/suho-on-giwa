@@ -1,5 +1,15 @@
 import { defineChain } from "viem";
 
+function resolveHttpUrl(value: string | undefined, fallback: string) {
+  if (!value) return fallback;
+  try {
+    const url = new URL(value);
+    return url.hostname && (url.protocol === "https:" || url.protocol === "http:") ? value : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 export const GIWA_DOCS = {
   connect: "https://docs.giwa.io/giwa-chain/en/get-started/connect-to-giwa",
   dojangContracts: "https://docs.giwa.io/giwa-chain/en/giwa-ecosystem/dojang/contracts",
@@ -34,10 +44,12 @@ export const GIWA_SEPOLIA = defineChain({
   testnet: true
 });
 
-export const GIWA_RPC_URL = process.env.GIWA_RPC_URL || "https://sepolia-rpc.giwa.io";
-export const GIWA_FLASHBLOCKS_RPC_URL =
-  process.env.GIWA_FLASHBLOCKS_RPC_URL || "https://sepolia-rpc-flashblocks.giwa.io";
-export const ETHEREUM_RPC_URL = process.env.ETHEREUM_RPC_URL || "https://ethereum-rpc.publicnode.com";
+export const GIWA_RPC_URL = resolveHttpUrl(process.env.GIWA_RPC_URL, "https://sepolia-rpc.giwa.io");
+export const GIWA_FLASHBLOCKS_RPC_URL = resolveHttpUrl(
+  process.env.GIWA_FLASHBLOCKS_RPC_URL,
+  "https://sepolia-rpc-flashblocks.giwa.io"
+);
+export const ETHEREUM_RPC_URL = resolveHttpUrl(process.env.ETHEREUM_RPC_URL, "https://ethereum-rpc.publicnode.com");
 
 export const GIWA_CONTRACTS = {
   // Sources: GIWA Dojang Contracts docs and giwa-io/dojang README, copied 2026-07-24.
