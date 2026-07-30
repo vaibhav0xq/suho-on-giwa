@@ -100,9 +100,27 @@ function getInitialTheme(): Theme {
   return stored === "light" ? "light" : "dark";
 }
 
+const PRIMARY_HOST = "thesuho.in";
+const CONSOLE_HOST = "console.thesuho.in";
+
+function isConsoleHost(hostname: string) {
+  return hostname.toLowerCase().startsWith("console.");
+}
+
+
+function overviewUrl() {
+  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") return "/";
+  return `${window.location.protocol}//${PRIMARY_HOST}`;
+}
+
+function consoleUrl() {
+  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") return undefined;
+  return `${window.location.protocol}//${CONSOLE_HOST}`;
+}
+
 function getInitialView() {
   if (typeof window === "undefined") return "intro" as const;
-  return window.location.pathname.toLowerCase().startsWith("/console") ? "console" as const : "intro" as const;
+  return isConsoleHost(window.location.hostname) ? "console" as const : "intro" as const;
 }
 
 function createNonce() {
@@ -220,9 +238,23 @@ export default function Home() {
   }, [view]);
 
   const routeToView = useCallback((nextView: "intro" | "console") => {
-    const nextPath = nextView === "console" ? "/console" : "/";
-    if (window.location.pathname !== nextPath) window.history.pushState({}, "", nextPath);
-    setView(nextView);
+    if (nextView === "console") {
+      const target = consoleUrl();
+      if (target) {
+        window.location.assign(target);
+        return;
+      }
+      setView("console");
+      return;
+    }
+
+    if (isConsoleHost(window.location.hostname)) {
+      window.location.assign(overviewUrl());
+      return;
+    }
+
+    if (window.location.pathname !== "/") window.history.pushState({}, "", "/");
+    setView("intro");
   }, []);
 
   useEffect(() => {
