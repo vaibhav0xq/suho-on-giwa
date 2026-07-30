@@ -100,25 +100,35 @@ function getInitialTheme(): Theme {
   return stored === "light" ? "light" : "dark";
 }
 
-const PRIMARY_HOST = "thesuho.in";
-const CONSOLE_HOST = "console.thesuho.in";
+const TEMP_HOST_SUFFIXES = [".vercel.app", "localhost", "127.0.0.1"] as const;
 
-function isConsoleHost(hostname: string) {
-  return hostname.toLowerCase() === CONSOLE_HOST;
+function normalizedHostname() {
+  return window.location.hostname.toLowerCase();
 }
 
-function isPrimaryHost(hostname: string) {
-  return hostname.toLowerCase() === PRIMARY_HOST;
+function isTemporaryHost(hostname: string) {
+  const host = hostname.toLowerCase();
+  return TEMP_HOST_SUFFIXES.some((suffix) => host === suffix || host.endsWith(suffix));
+}
+
+function baseHostname(hostname: string) {
+  const host = hostname.toLowerCase();
+  return host.startsWith("console.") ? host.slice("console.".length) : host;
+}
+
+function isConsoleHost(hostname: string) {
+  return !isTemporaryHost(hostname) && hostname.toLowerCase().startsWith("console.");
 }
 
 function overviewUrl() {
   if (!isConsoleHost(window.location.hostname)) return undefined;
-  return `${window.location.protocol}//${PRIMARY_HOST}`;
+  return `${window.location.protocol}//${baseHostname(window.location.hostname)}`;
 }
 
 function consoleUrl() {
-  if (!isPrimaryHost(window.location.hostname)) return undefined;
-  return `${window.location.protocol}//${CONSOLE_HOST}`;
+  const host = normalizedHostname();
+  if (isTemporaryHost(host) || isConsoleHost(host)) return undefined;
+  return `${window.location.protocol}//console.${baseHostname(host)}`;
 }
 
 function getInitialView() {
