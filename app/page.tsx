@@ -100,6 +100,11 @@ function getInitialTheme(): Theme {
   return stored === "light" ? "light" : "dark";
 }
 
+function getInitialView() {
+  if (typeof window === "undefined") return "intro" as const;
+  return window.location.pathname.toLowerCase().startsWith("/console") ? "console" as const : "intro" as const;
+}
+
 function createNonce() {
   const bytes = new Uint8Array(16);
   window.crypto.getRandomValues(bytes);
@@ -193,7 +198,7 @@ export default function Home() {
   const [now, setNow] = useState(() => Math.floor(Date.now() / 1000));
   const [activeStation, setActiveStation] = useState(0);
   const [routeStation, setRouteStation] = useState(0);
-  const [view, setView] = useState<"intro" | "console">("intro");
+  const [view, setView] = useState<"intro" | "console">(() => getInitialView());
   const [isLaunchingConsole, setIsLaunchingConsole] = useState(false);
   const fieldStateRef = useRef({ activeStation: 0, view: "intro" as "intro" | "console" });
 
@@ -203,9 +208,22 @@ export default function Home() {
   }, [theme]);
 
   useEffect(() => {
+    const syncViewFromUrl = () => setView(getInitialView());
+    syncViewFromUrl();
+    window.addEventListener("popstate", syncViewFromUrl);
+    return () => window.removeEventListener("popstate", syncViewFromUrl);
+  }, []);
+
+  useEffect(() => {
     document.documentElement.dataset.view = view;
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [view]);
+
+  const routeToView = useCallback((nextView: "intro" | "console") => {
+    const nextPath = nextView === "console" ? "/console" : "/";
+    if (window.location.pathname !== nextPath) window.history.pushState({}, "", nextPath);
+    setView(nextView);
+  }, []);
 
   useEffect(() => {
     const id = window.setInterval(() => setNow(Math.floor(Date.now() / 1000)), 1000);
@@ -215,10 +233,14 @@ export default function Home() {
     if (view === "console" || isLaunchingConsole) return;
     setIsLaunchingConsole(true);
     window.setTimeout(() => {
-      setView("console");
+      routeToView("console");
       window.setTimeout(() => setIsLaunchingConsole(false), 180);
     }, 520);
-  }, [isLaunchingConsole, view]);
+  }, [isLaunchingConsole, routeToView, view]);
+
+  const backToIntro = useCallback(() => {
+    routeToView("intro");
+  }, [routeToView]);
 
   // Scroll reveal: fade+rise each section once as it enters the viewport.
   useEffect(() => {
@@ -1508,11 +1530,11 @@ export default function Home() {
       <div className={"view view--console" + (isLaunchingConsole ? " is-arriving" : "")} id="console">
         <header className="cbar">
           <div className="wrap cbar__in">
-            <button className="mark" onClick={() => setView("intro")} aria-label="Back to Assay overview"><span className="mkid">SUHO</span></button>
+            <button className="mark" onClick={backToIntro} aria-label="Back to Assay overview"><span className="mkid">SUHO</span></button>
             <span className="viewtag">Console</span>
             <div className="cstatus"><span className="s"><span className="d" />GIWA - <b>91342</b></span><span className="s"><span className="d" />Flashblocks <b>ONLINE</b></span></div>
             <span className="sp" />
-            <div className="btns"><button className="back-link" onClick={() => setView("intro")}><span aria-hidden="true">{"\u2190"}</span><span className="bk-tx">Back to Assay overview</span></button><button className="tbtn" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"} title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}><span className="theme-icon" aria-hidden="true" /></button><button className={"wal " + walletStatusClass} onClick={() => { void connect(); }}><span className="d" /><span className="wal-tx">{walletStatusCopy}</span></button></div>
+            <div className="btns"><button className="back-link" onClick={backToIntro}><span aria-hidden="true">{"\u2190"}</span><span className="bk-tx">Back to Assay overview</span></button><button className="tbtn" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"} title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}><span className="theme-icon" aria-hidden="true" /></button><button className={"wal " + walletStatusClass} onClick={() => { void connect(); }}><span className="d" /><span className="wal-tx">{walletStatusCopy}</span></button></div>
           </div>
         </header>
 
