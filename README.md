@@ -171,3 +171,7 @@ npm run verify:deployments
 Suho is testnet software. Do not use it with mainnet funds without a contract audit, production monitoring, and proper key management.
 
 Do not commit `.env` files, private keys, wallet secrets, local databases, build output, or production logs.
+
+## Author
+
+Built by [Vaibhav Gangani](https://vaibhav0xq.com).
